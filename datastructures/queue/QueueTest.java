@@ -8,11 +8,11 @@ public class QueueTest {
     myQueue.push(7);
     myQueue.push(9);
 
-    Assert.assertTrue( myQueue.top().intValue() == 9 );
-    Assert.assertTrue( myQueue.pop().intValue() == 9 );
-    Assert.assertTrue( myQueue.pop().intValue() == 7 );
-    Assert.assertTrue( myQueue.top().intValue() == 4 );
-    Assert.assertTrue( myQueue.pop().intValue() == 4 );
+    Assert.assertTrue( myQueue.top() == 9 );
+    Assert.assertTrue( myQueue.pop() == 9 );
+    Assert.assertTrue( myQueue.pop() == 7 );
+    Assert.assertTrue( myQueue.top() == 4 );
+    Assert.assertTrue( myQueue.pop() == 4 );
   }
 }
 
