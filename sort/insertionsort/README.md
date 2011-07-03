@@ -3,12 +3,12 @@
 ## Compile and run
 
 Compile as:
-  `gcc insertionsort.c -o sort'
+  `gcc insertionsort.c -o sort`
 
 Run as:
   `./sort`
 
-## Best, Worst and Average cases (source: (wikipedia)[http://en.wikipedia.org/wiki/Insertion_sort#Best.2C_worst.2C_and_average_cases])
+## Best, Worst and Average cases (source: [wikipedia](http://en.wikipedia.org/wiki/Insertion_sort#Best.2C_worst.2C_and_average_cases))
 
 The best case input is an array that is already sorted. In this case insertion sort has a linear running time (i.e., Θ(n)). During each iteration, the first remaining element of the input is only compared with the right-most element of the sorted subsection of the array.
 
