@@ -1,36 +1,41 @@
 #include<stdio.h>
 
-void swap(int *, int, int);
 void insertionSort(int *, int);
 void printArray(int *, int);
 
+/**
+ * Implementation of insertion sort.
+ */
 void insertionSort(int *array, int length){
+  int i;
+  for(i=0; i<length-1; i++) {
+    if(array[i+1] < array[i]) {
+      int j=i+1;
+      int tmp = array[j];
+      while(array[j-1] > tmp && j>0) {
+        array[j] = array[j-1];
+        j--;
+      }
+      array[j] = tmp;
+    }
+  }
 }
 
 int main() {
-  int array[] = {5,19,34,8,5,90,-4,1,-6,13};
-  //int array[] = {-6,-4,1,5,5,8,13,19,34,90};
-  //int array[] = {-4,-6,1,5,5,8,13,19,34,90};
+  int array[] = {5,19,34,8,5,90,0,12,0,-4,1,-6,13};
   int length = sizeof(array)/sizeof(int);
 
-  printf("Original array: ");
+  puts("Original array: ");
   printArray(array, length);
 
   insertionSort(array, length);
 
-  printf("Sorted array: ");
+  puts("Sorted array: ");
   printArray(array, length);
 }
 
-
-void swap(int *array, int indexA, int indexB) {
-  int tmp = array[indexA];
-  array[indexA] = array[indexB];
-  array[indexB] = tmp;
-}
-
 void printArray(int *array, int length){
-  printf("\n[");
+  printf("[");
   int i;
   for(i=0; i<length; i++) {
     printf("%d, ", array[i]);
