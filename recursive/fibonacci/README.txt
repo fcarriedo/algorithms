@@ -1,4 +1,4 @@
 Compile as:
   gcc fib.c -o fib
 Run as:
-  ./fib
+  ./fib 5
