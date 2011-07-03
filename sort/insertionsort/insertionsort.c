@@ -12,7 +12,7 @@ void insertionSort(int *array, int length){
     if(array[i+1] < array[i]) {
       int j=i+1;
       int tmp = array[j];
-      while(array[j-1] > tmp && j>0) { // shift values 'till necessary.
+      while(array[j-1] > tmp && j>0) { // shift places till necessary.
         array[j] = array[j-1];
         j--;
       }
