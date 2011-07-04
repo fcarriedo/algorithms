@@ -2,6 +2,8 @@
 
 int binarySearch(int *, int, int, int);
 
+void assertTrue(char*, int);
+
 /**
  * Returns the index of the searched element or -1 if not
  * existent.
@@ -65,4 +67,19 @@ int main() {
   elemToSearch = 113;
   ix = binarySearch(sortedArray, 0, length-1, elemToSearch);
   printf("Index of searched elem %d = %d\n", elemToSearch, ix);
+
+  int nonExistingElem = 71;
+  ix = binarySearch(sortedArray, 0, length-1, nonExistingElem);
+  assertTrue("Index of non existent elem should be '-1'", ix == -1);
+}
+
+/**
+ * Minimal test framework
+ */
+void assertTrue(char *msg, int boolean) {
+  if( !boolean ) {
+    printf("=> FAIL! : %s\n", msg);
+  } else {
+    printf("= PASS\n");
+  }
 }
