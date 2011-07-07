@@ -10,13 +10,15 @@ public class Intersection {
   private static Integer[] intersection(int[] a, int[] b) {
     int i =0, j = 0;
     List<Integer> intersections = new ArrayList<Integer>();
-    while(true) {
-      // If we reached the max length of either array, we break.
-      if(i >= a.length || j >= b.length) break;
+    while(i < a.length && j < b.length) {
       // If equal, add them to the intersection list
-      if(a[i] == b[j]) intersections.add( a[i] );
-      // Increment the according index
-      if( a[i] < b[j] ) i++; else j++;
+      if(a[i] == b[j]) {
+        intersections.add( a[i] );
+        i++; j++; // Increment both indexes.
+      } else {
+        // Increment the according index
+        if( a[i] < b[j] ) i++; else j++;
+      }
     }
     return intersections.toArray(new Integer[]{});
   }
