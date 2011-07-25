@@ -13,7 +13,7 @@ public class TreeTraversal {
   }
 
   /**
-   *
+   * Pre Order Traversal (root, left, right)
    */
   public static void preOrderTraversal(Node node) {
     System.out.print(node.value + " ");
@@ -22,7 +22,7 @@ public class TreeTraversal {
   }
 
   /**
-   *
+   * In Order Traversal (left, root, right)
    */
   public static void inOrderTraversal(Node node) {
     if(node.leftNode != null) inOrderTraversal(node.leftNode);
@@ -31,7 +31,7 @@ public class TreeTraversal {
   }
 
   /**
-   *
+   * Post Order traversal (left, right, root)
    */
   public static void postOrderTraversal(Node node) {
     if(node.leftNode != null) postOrderTraversal(node.leftNode);
@@ -39,6 +39,10 @@ public class TreeTraversal {
     System.out.print(node.value + " ");
   }
 
+  /**
+   * Recreates the Wikipedia example tree structure
+   * http://en.wikipedia.org/wiki/Tree_traversal.
+   */
   public static Node createTree() {
     Node a = new Node('A');
     Node b = new Node('B');
