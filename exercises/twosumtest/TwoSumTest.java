@@ -21,7 +21,11 @@ interface TwoSum {
 
 public class TwoSumTest {
   public static void main(String[] args) {
-    TwoSum twoSum = new TwoSumN2Impl();
+
+    // =========================
+    // Testing the O(n) implementation (linear)
+    // =========================
+    TwoSum twoSum = new TwoSumLinearImpl();
     twoSum.store(1);
     twoSum.store(-2);
     twoSum.store(3);
@@ -36,28 +40,62 @@ public class TwoSumTest {
     Assert.assertTrue( !twoSum.test(10) );
     Assert.assertTrue( !twoSum.test(5) );
     Assert.assertTrue( !twoSum.test(0) );
+
+
+    // =========================
+    // Testing the O(n2) implementation
+    // =========================
+    twoSum = new TwoSumN2Impl();
+    twoSum.store(1);
+    twoSum.store(-2);
+    twoSum.store(3);
+    twoSum.store(6);
+
+    // Positive tests
+    Assert.assertTrue( twoSum.test(4) );
+    Assert.assertTrue( twoSum.test(-1) );
+    Assert.assertTrue( twoSum.test(9) );
+
+    // Negative tests
+    Assert.assertTrue( !twoSum.test(10) );
+    Assert.assertTrue( !twoSum.test(5) );
+    Assert.assertTrue( !twoSum.test(0) );
+
+
+
   }
 }
 
 /**
  * Implementation with linear O(n) complexity on 'store'
- * and O(1) complexity on the test.
+ * and O(1) complexity on 'test'.
  *
  * Focuses logic into the 'store' algorithm, not in the 'test'
  */
 class TwoSumLinearImpl implements TwoSum {
 
+  private final Set<Integer> internalStore = new HashSet<Integer>();
+  private final Set<Integer> sums = new HashSet<Integer>();
+
   public void store(int input) {
+    internalStore.add(input);
+    // We calculate all the sums upon storage
+    for( int value : internalStore ) {
+      if( input != value ) {
+        int sum = input + value;
+        sums.add( sum );
+      }
+    }
   }
 
   public boolean test(int test) {
-    return false;
+    return sums.contains( test );
   }
-
 }
 
 /**
- * This implementation has a disastrous O(n2) complexity.
+ * Implementation with O(1) complexity on 'store'
+ * and disastrous O(n2) complexity on 'test'.
  *
  * Focuses all the logic into the 'test' algorithm, not in the 'store'
  */
