@@ -39,6 +39,22 @@ public class TwoSumTest {
   }
 }
 
+/**
+ * Implementation with linear O(n) complexity on 'store'
+ * and O(1) complexity on the test.
+ *
+ * Focuses logic into the 'store' algorithm, not in the 'test'
+ */
+class TwoSumLinearImpl implements TwoSum {
+
+  public void store(int input) {
+  }
+
+  public boolean test(int test) {
+    return false;
+  }
+
+}
 
 /**
  * This implementation has a disastrous O(n2) complexity.
@@ -49,7 +65,7 @@ class TwoSumN2Impl implements TwoSum {
 
   private List<Integer> internalStore = new ArrayList<Integer>();
 
-  private Map<Integer,Boolean> cache = new HashMap<Integer,Boolean>();
+  private Set<Integer> cache = new HashSet<Integer>();
 
   public void store(int input) {
     internalStore.add(input);
@@ -57,7 +73,7 @@ class TwoSumN2Impl implements TwoSum {
 
   public boolean test(int test) {
     // Enhancement which brings recurring cases to a O(1)
-    if(cache.get(test) != null) {
+    if( cache.contains(test) ) {
       return true;
     }
 
@@ -68,7 +84,7 @@ class TwoSumN2Impl implements TwoSum {
           int second = internalStore.get(j);
           int sum = first+second;
           if(sum == test) {
-            cache.put(test, true);
+            cache.add(test);
             return true;
           }
         }
