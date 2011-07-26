@@ -56,8 +56,7 @@ class TwoSumN2Impl implements TwoSum {
   }
 
   public boolean test(int test) {
-    // Enhancement which would bring recurring cases
-    // to a O(1)
+    // Enhancement which brings recurring cases to a O(1)
     if(cache.get(test) != null) {
       return true;
     }
