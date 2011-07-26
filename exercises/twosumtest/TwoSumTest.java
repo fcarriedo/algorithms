@@ -60,9 +60,6 @@ public class TwoSumTest {
     Assert.assertTrue( !twoSum.test(10) );
     Assert.assertTrue( !twoSum.test(5) );
     Assert.assertTrue( !twoSum.test(0) );
-
-
-
   }
 }
 
