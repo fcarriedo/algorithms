@@ -13,6 +13,8 @@ class NumberTesterRegexImpl implements NumberTester {
   private static final String numRegex = "^(\\d)*$";
 
   public boolean isNumber(String numberToTest) {
+    if( numberToTest == null || numberToTest.length() == 0 ) return false;
+
     return Pattern.matches(numRegex, numberToTest);
   }
 }
@@ -30,6 +32,8 @@ class NumberTesterLinearImpl implements NumberTester {
    * is higher: 10x in this case.
    */
   public boolean isNumber(String numberToTest) {
+    if( numberToTest == null || numberToTest.length() == 0 ) return false;
+
     char[] chars = numberToTest.toCharArray();
     for(char c : chars) {
       boolean isDigit = false;
@@ -50,7 +54,7 @@ class NumberTesterBetterLinearImpl implements NumberTester {
   private static final char[] digitChars = {'0','1','2','3','4','5','6','7','8','9'};
   private static final Set<Character> digitSet = new HashSet<Character>();
 
-  static { // Initialize the set. On a static block so that this only happens once per class.
+  static { // Initialize the set. Happens on a static block so that it is only done once per class.
     for(char numChar : digitChars) {
       digitSet.add(numChar);
     }
@@ -60,6 +64,8 @@ class NumberTesterBetterLinearImpl implements NumberTester {
    * A linear O(n) complexity algorithm implementation.
    */
   public boolean isNumber(String numberToTest) {
+    if( numberToTest == null || numberToTest.length() == 0 ) return false;
+
     char[] chars = numberToTest.toCharArray();
     for(char c : chars) {
       if( !digitSet.contains(c) ) return false;
@@ -81,6 +87,8 @@ public class NumberTest {
     Assert.assertTrue( !numTester.isNumber("abc") );
     Assert.assertTrue( !numTester.isNumber("2345a") );
     Assert.assertTrue( !numTester.isNumber("  2345") );
+    Assert.assertTrue( !numTester.isNumber("") );
+    Assert.assertTrue( !numTester.isNumber(null) );
 
     // Testing the linear implementation
     numTester = new NumberTesterLinearImpl();
@@ -90,6 +98,8 @@ public class NumberTest {
     Assert.assertTrue( !numTester.isNumber("abc") );
     Assert.assertTrue( !numTester.isNumber("2345a") );
     Assert.assertTrue( !numTester.isNumber("  2345") );
+    Assert.assertTrue( !numTester.isNumber("") );
+    Assert.assertTrue( !numTester.isNumber(null) );
 
     // Testing the better linear implementation
     numTester = new NumberTesterBetterLinearImpl();
@@ -99,6 +109,8 @@ public class NumberTest {
     Assert.assertTrue( !numTester.isNumber("abc") );
     Assert.assertTrue( !numTester.isNumber("2345a") );
     Assert.assertTrue( !numTester.isNumber("  2345") );
+    Assert.assertTrue( !numTester.isNumber("") );
+    Assert.assertTrue( !numTester.isNumber(null) );
   }
 }
 
