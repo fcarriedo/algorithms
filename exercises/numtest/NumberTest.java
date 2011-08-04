@@ -74,6 +74,23 @@ class NumberTesterBetterLinearImpl implements NumberTester {
   }
 }
 
+/**
+ * O(n) implementation that does a 'char in int range comparison'
+ * to verify it its a number.
+ */
+class NumberTesterCharCompImpl implements NumberTester {
+
+  public boolean isNumber(String numberToTest) {
+    if( numberToTest == null || numberToTest.length() == 0 ) return false;
+
+    char[] chars = numberToTest.toCharArray();
+    for(int c : chars) {
+      if( c<'0' || c>'9' ) return false; // compare its integer representations.
+    }
+    return true;
+  }
+}
+
 public class NumberTest {
 
   public static void main(String[] args) {
@@ -103,6 +120,17 @@ public class NumberTest {
 
     // Testing the better linear implementation
     numTester = new NumberTesterBetterLinearImpl();
+
+    Assert.assertTrue( numTester.isNumber("2345") );
+    Assert.assertTrue( numTester.isNumber("0002345") );
+    Assert.assertTrue( !numTester.isNumber("abc") );
+    Assert.assertTrue( !numTester.isNumber("2345a") );
+    Assert.assertTrue( !numTester.isNumber("  2345") );
+    Assert.assertTrue( !numTester.isNumber("") );
+    Assert.assertTrue( !numTester.isNumber(null) );
+
+    // Testing the char comparison linear implementation
+    numTester = new NumberTesterCharCompImpl();
 
     Assert.assertTrue( numTester.isNumber("2345") );
     Assert.assertTrue( numTester.isNumber("0002345") );
