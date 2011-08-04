@@ -12,10 +12,15 @@ class NumberTesterRegexImpl implements NumberTester {
 
   private static final String numRegex = "^(\\d)*$";
 
+  private static Pattern numPattern;
+
+  NumberTesterRegexImpl() {
+    numPattern = Pattern.compile(numRegex);
+  }
+
   public boolean isNumber(String numberToTest) {
     if( numberToTest == null || numberToTest.length() == 0 ) return false;
-
-    return Pattern.matches(numRegex, numberToTest);
+    return numPattern.matcher(numberToTest).matches();
   }
 }
 
@@ -93,52 +98,53 @@ class NumberTesterCharCompImpl implements NumberTester {
 
 public class NumberTest {
 
+  private static final int MAX_ROUNDS = 100000;
+
   public static void main(String[] args) {
+    // SUT
+    NumberTester numTester = null;
 
     // Testing the regex implementation
-    // SUT
-    NumberTester numTester = new NumberTesterRegexImpl();
-
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    numTester = new NumberTesterRegexImpl();
+    long elapsedTimeMillis = performTest(numTester);
+    System.out.println("RegEx: " + elapsedTimeMillis);
 
     // Testing the linear implementation
     numTester = new NumberTesterLinearImpl();
-
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("O(n)  10x: " + elapsedTimeMillis);
 
     // Testing the better linear implementation
     numTester = new NumberTesterBetterLinearImpl();
-
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("O(n) Hash: " + elapsedTimeMillis);
 
     // Testing the char comparison linear implementation
     numTester = new NumberTesterCharCompImpl();
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("(This is the winner!): O(n) char comp: " + elapsedTimeMillis);
+  }
 
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+  /**
+   * Executes as set of tests in multiple rounds and times its performance.
+   *
+   * @param numTester the SUT
+   * @return The elapsed time that it took to perform the test.
+   */
+  private static long performTest(NumberTester numTester) {
+    long begin = System.currentTimeMillis();
+    for (int i=0; i<MAX_ROUNDS; i++) {
+      Assert.assertTrue( numTester.isNumber("2345") );
+      Assert.assertTrue( numTester.isNumber("0002345") );
+      Assert.assertTrue( !numTester.isNumber("abc") );
+      Assert.assertTrue( !numTester.isNumber("2345a") );
+      Assert.assertTrue( !numTester.isNumber("  2345") );
+      Assert.assertTrue( !numTester.isNumber("") );
+      Assert.assertTrue( !numTester.isNumber(null) );
+    }
+    long end = System.currentTimeMillis();
+
+    return end-begin;
   }
 }
 
