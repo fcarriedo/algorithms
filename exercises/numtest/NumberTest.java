@@ -107,22 +107,22 @@ public class NumberTest {
     // Testing the regex implementation
     numTester = new NumberTesterRegexImpl();
     long elapsedTimeMillis = performTest(numTester);
-    System.out.println("RegEx: " + elapsedTimeMillis);
+    System.out.println("RegEx: " + elapsedTimeMillis + "ms");
 
     // Testing the linear implementation
     numTester = new NumberTesterLinearImpl();
     elapsedTimeMillis = performTest(numTester);
-    System.out.println("O(n)  10x: " + elapsedTimeMillis);
+    System.out.println("O(n)  10x: " + elapsedTimeMillis + "ms");
 
     // Testing the better linear implementation
     numTester = new NumberTesterBetterLinearImpl();
     elapsedTimeMillis = performTest(numTester);
-    System.out.println("O(n) Hash: " + elapsedTimeMillis);
+    System.out.println("O(n) Hash: " + elapsedTimeMillis + "ms");
 
     // Testing the char comparison linear implementation
     numTester = new NumberTesterCharCompImpl();
     elapsedTimeMillis = performTest(numTester);
-    System.out.println("(This is the winner!): O(n) char comp: " + elapsedTimeMillis);
+    System.out.println("(This is the winner!): O(n) char comp: " + elapsedTimeMillis + "ms");
   }
 
   /**
