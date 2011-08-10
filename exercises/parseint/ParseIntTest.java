@@ -24,7 +24,7 @@ class IntParserImpl implements IntParser {
     boolean isNegative = chars[0] == '-';
     int result = 0;
     for(int i=chars.length-1; i>=0; i--) {
-      if( i == 0 && isNegative ) break; // The first character is the sign.
+      if( isNegative && i == 0 ) break; // The first character is the sign.
       if( chars[i] < '0' || chars[i] > '9' ) {
         throw new IllegalArgumentException("The given string doesn't represent an int.");
       }
