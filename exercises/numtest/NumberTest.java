@@ -12,10 +12,15 @@ class NumberTesterRegexImpl implements NumberTester {
 
   private static final String numRegex = "^(\\d)*$";
 
+  private static Pattern numPattern;
+
+  NumberTesterRegexImpl() {
+    numPattern = Pattern.compile(numRegex);
+  }
+
   public boolean isNumber(String numberToTest) {
     if( numberToTest == null || numberToTest.length() == 0 ) return false;
-
-    return Pattern.matches(numRegex, numberToTest);
+    return numPattern.matcher(numberToTest).matches();
   }
 }
 
@@ -74,43 +79,72 @@ class NumberTesterBetterLinearImpl implements NumberTester {
   }
 }
 
+/**
+ * O(n) implementation that does a 'char in int range comparison'
+ * to verify it its a number.
+ */
+class NumberTesterCharCompImpl implements NumberTester {
+
+  public boolean isNumber(String numberToTest) {
+    if( numberToTest == null || numberToTest.length() == 0 ) return false;
+
+    char[] chars = numberToTest.toCharArray();
+    for(int c : chars) {
+      if( c<'0' || c>'9' ) return false; // compare its integer representations.
+    }
+    return true;
+  }
+}
+
 public class NumberTest {
 
+  private static final int MAX_ROUNDS = 100000;
+
   public static void main(String[] args) {
+    // SUT
+    NumberTester numTester = null;
 
     // Testing the regex implementation
-    // SUT
-    NumberTester numTester = new NumberTesterRegexImpl();
-
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    numTester = new NumberTesterRegexImpl();
+    long elapsedTimeMillis = performTest(numTester);
+    System.out.println("RegEx: " + elapsedTimeMillis + "ms");
 
     // Testing the linear implementation
     numTester = new NumberTesterLinearImpl();
-
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("O(n)  10x: " + elapsedTimeMillis + "ms");
 
     // Testing the better linear implementation
     numTester = new NumberTesterBetterLinearImpl();
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("O(n) Hash: " + elapsedTimeMillis + "ms");
 
-    Assert.assertTrue( numTester.isNumber("2345") );
-    Assert.assertTrue( numTester.isNumber("0002345") );
-    Assert.assertTrue( !numTester.isNumber("abc") );
-    Assert.assertTrue( !numTester.isNumber("2345a") );
-    Assert.assertTrue( !numTester.isNumber("  2345") );
-    Assert.assertTrue( !numTester.isNumber("") );
-    Assert.assertTrue( !numTester.isNumber(null) );
+    // Testing the char comparison linear implementation
+    numTester = new NumberTesterCharCompImpl();
+    elapsedTimeMillis = performTest(numTester);
+    System.out.println("(This is the winner!): O(n) char comp: " + elapsedTimeMillis + "ms");
+  }
+
+  /**
+   * Executes as set of tests in multiple rounds and times its performance.
+   *
+   * @param numTester the SUT
+   * @return The elapsed time that it took to perform the test.
+   */
+  private static long performTest(NumberTester numTester) {
+    long begin = System.currentTimeMillis();
+    for (int i=0; i<MAX_ROUNDS; i++) {
+      Assert.assertTrue( numTester.isNumber("2345") );
+      Assert.assertTrue( numTester.isNumber("0002345") );
+      Assert.assertTrue( !numTester.isNumber("abc") );
+      Assert.assertTrue( !numTester.isNumber("2345a") );
+      Assert.assertTrue( !numTester.isNumber("  2345") );
+      Assert.assertTrue( !numTester.isNumber("") );
+      Assert.assertTrue( !numTester.isNumber(null) );
+    }
+    long end = System.currentTimeMillis();
+
+    return end-begin;
   }
 }
 
