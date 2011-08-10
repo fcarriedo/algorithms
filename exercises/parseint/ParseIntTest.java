@@ -28,7 +28,7 @@ class IntParserImpl implements IntParser {
     char[] chars = str.trim().toCharArray();
     boolean isNegative = chars[0] == '-';
     if( isNegative && chars.length == 1 ) {
-      throw new NumberFormatException("Incorrect negative number");
+      throw new NumberFormatException("Incomplete negative number");
     }
 
     int result = 0;
