@@ -37,6 +37,7 @@ class IntParserImpl implements IntParser {
       if( chars[i] < '0' || chars[i] > '9' ) {
         throw new NumberFormatException("The given string doesn't represent an int.");
       }
+
       result += (((int)chars[i])-48)*((int)Math.pow(10, chars.length-1-i));
     }
 
@@ -50,9 +51,14 @@ public class ParseIntTest {
     // SUT
     IntParser parser = new IntParserImpl();
 
+    // Positive number test
     String intStr = "18574";
     Assert.assertTrue( parser.parseInt(intStr) == 18574 );
 
+    intStr = "999999";
+    Assert.assertTrue( parser.parseInt(intStr) == 999999 );
+
+    // Negative number test
     intStr = "-459";
     Assert.assertTrue( parser.parseInt(intStr) == -459 );
 
