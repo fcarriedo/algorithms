@@ -15,7 +15,7 @@ interface IntParser {
 
 class IntParserImpl implements IntParser {
 
-  /** O(n) implementation of a int parser. */
+  /** O(n) implementation of the int parser. */
   public int parseInt(String str) {
     if( str == null || str.trim().equals("") )
       throw new IllegalArgumentException("Input cannot be null or empty.");
