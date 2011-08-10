@@ -15,7 +15,13 @@ interface IntParser {
 
 class IntParserImpl implements IntParser {
 
-  /** O(n) implementation of the int parser. */
+  /** 
+   * O(n) implementation of the int parser.
+   *
+   * Implementation details:
+   *   Eg. "245"
+   *      5*10^0 + 4*10^1 + 2*10^2 = 5+40+200 = 245
+   */
   public int parseInt(String str) {
     if( str == null || str.trim().equals("") ) throw new NumberFormatException("Input cannot be null or empty.");
 
