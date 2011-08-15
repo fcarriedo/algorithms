@@ -49,19 +49,15 @@ public class WordBreak {
   }
 
   public static void main(String[] args) {
+    WordBreak wordBreaker = new WordBreak();
 
     String input = "thisistheendoftheendlesswar";
 
-    WordBreak wordBreaker = new WordBreak();
     String result = wordBreaker.wordBreak(input);
-    result = wordBreaker.segmentString(input);
-    System.out.println(result);
+    Assert.assertTrue("this is the end of the end less war".equals(result));
 
-    if( !result.equals("this is the end of the end less war") ) {
-      System.out.println("Your implementation failed miserably.");
-    } {
-      System.out.println("Neat implementation!");
-    }
+    result = wordBreaker.segmentString(input);
+    Assert.assertTrue("this is the end of the end less war".equals(result));
   }
 
   private void initDictionary() {
@@ -77,4 +73,14 @@ public class WordBreak {
     dict.add("less");
   }
 
+}
+
+class Assert {
+  public static void assertTrue(boolean condition) {
+    if( !condition ) {
+      System.out.println("Your implementation failed miserably!");
+    } else {
+      System.out.println("You rocked on this one!");
+    }
+  }
 }
