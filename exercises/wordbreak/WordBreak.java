@@ -18,9 +18,10 @@ public class WordBreak {
   }
 
   private String wordBreak(String input) {
-    int length = input.length();
+    if( dict.contains(input) ) return input;
+    int len = input.length();
     StringBuilder result = null;
-    for(int endIx=0, beginIx=0; endIx<length+1; endIx++) {
+    for(int beginIx=0, endIx=0; endIx<len+1; endIx++) {
       String potentialWord = input.substring(beginIx, endIx);
       if( dict.contains(potentialWord) ) {
         if( result == null ) result = new StringBuilder();
@@ -31,13 +32,32 @@ public class WordBreak {
     return result == null ? null : result.toString().trim();
   }
 
+  String segmentString(String input) {
+    if (dict.contains(input)) return input;
+    int len = input.length();
+    for (int i = 1; i < len; i++) {
+      String prefix = input.substring(0, i);
+      if (dict.contains(prefix)) {
+        String suffix = input.substring(i, len);
+        String segSuffix = segmentString(suffix);
+        if (segSuffix != null) {
+          return prefix + " " + segSuffix;
+        }
+      }
+    }
+    return null;
+  }
+
   public static void main(String[] args) {
 
-    String input = "applepie";
+    String input = "thisistheendoftheendlesswar";
 
-    String result = new WordBreak().wordBreak(input);
+    WordBreak wordBreaker = new WordBreak();
+    String result = wordBreaker.wordBreak(input);
+    result = wordBreaker.segmentString(input);
+    System.out.println(result);
 
-    if( !result.equals("apple pie") ) {
+    if( !result.equals("this is the end of the end less war") ) {
       System.out.println("Your implementation failed miserably.");
     } {
       System.out.println("Neat implementation!");
@@ -47,6 +67,14 @@ public class WordBreak {
   private void initDictionary() {
     dict.add("apple");
     dict.add("pie");
+    dict.add("this");
+    dict.add("is");
+    dict.add("the");
+    dict.add("end");
+    dict.add("of");
+    dict.add("war");
+    dict.add("endless");
+    dict.add("less");
   }
 
 }
