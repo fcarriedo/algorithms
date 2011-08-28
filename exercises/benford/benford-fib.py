@@ -14,22 +14,32 @@ from collections import defaultdict
 
 def fib(n):
     """
+    Return Fibonacci series up to n
+
     Linear (theoretical) implementation of the
     fibonnaci number calculation
     """
-    if n == 0 or n == 1: return n
-    curr, next = 1, 1
-    for x in xrange(2, n):
-        next, curr = ((next+curr),next)
+    result = []
+    curr, next = 0, 1
+    for x in xrange(n):
+        result.append(next)
+        next, curr = ((next+curr), next)
 
-    return next
+    return result
 
-def graph(stats,max_fib):
+def benford_dist(data):
+    count = dict( (i,0) for i in range(10) ) # init the dict
+    for elem in data:
+        first_letter = str(elem)[:1]
+        count[ int(first_letter) ] += 1
+
+    return [ (k, (v*100)/len(data)) for k, v in count.items() if k != 0 ]
+
+def graph(stats):
     """Creates a simple ASCII graph"""
-    for i in range(1,10):
-        percent = (stats[str(i)]*100/max_fib)
-        graph_percent_line = "".join('x' for x in xrange(percent))
-        print "\n%d = %d%% %s" % (i, percent, graph_percent_line),
+    for k, v in stats:
+        line = "".join('x' for x in xrange(v))
+        print "\n%s = %d%% %s" % (k, v, line),
 
 def main(args):
     if not args:
@@ -39,14 +49,8 @@ def main(args):
     else:
         max_fib = int(args[0])
 
-    stats = defaultdict(int)
-
-    for i in xrange(max_fib):
-        fib_num = fib(i)
-        key = str(fib_num)[:1]
-        stats[key] += 1
-
-    graph(stats, max_fib)
+    stats = benford_dist( fib(max_fib) )
+    graph(stats)
 
 
 if __name__ == '__main__':
