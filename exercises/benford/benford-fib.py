@@ -16,7 +16,7 @@ def fib(n):
     """
     Return Fibonacci series up to n
 
-    Linear (theoretical) implementation of the
+    Uses a theoretically linear implementation of the
     fibonnaci number calculation
     """
     result = []
@@ -28,7 +28,22 @@ def fib(n):
     return result
 
 def benford_dist(data):
-    count = dict( (i,0) for i in range(10) ) # init the dict
+    """
+    Returns a list of touples which represent:
+
+      (k, v) where
+               k = digit
+               v = percent of occurrence of the digit on data
+
+    Benford's law, also called the first-digit law, states that in lists of
+    numbers from many (but not all) real-life sources of data, the leading
+    digit is distributed in a specific, non-uniform way. According to this law,
+    the first digit is 1 about 30% of the time, and larger digits occur as the
+    leading digit with lower and lower frequency, to the point where 9 as a first
+    digit occurs less than 5% of the time. This distribution of first digits
+    is the same as the widths of gridlines on the logarithmic scale.
+    """
+    count = dict( (i,0) for i in range(10) ) # init the dict with 1..10 all val=0
     for elem in data:
         first_letter = str(elem)[:1]
         count[ int(first_letter) ] += 1
@@ -38,7 +53,7 @@ def benford_dist(data):
 def graph(stats):
     """Creates a simple ASCII graph"""
     for k, v in stats:
-        line = "".join('x' for x in xrange(v))
+        line = "".join('x' for x in xrange(v)) # line of length of percentage
         print "\n%s = %d%% %s" % (k, v, line),
 
 def main(args):
