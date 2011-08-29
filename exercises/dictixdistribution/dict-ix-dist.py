@@ -16,9 +16,7 @@ from collections import defaultdict
 
 def parse_dict(dict_file_name):
     """
-    Returns a list of tuples which represent:
-
-      (k, v) where
+    Returns a list of tuples (k, v) where:
              k = initial letter
              v = percent of occurrence of the initial letter on the dict
     """
