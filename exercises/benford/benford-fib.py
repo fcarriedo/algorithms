@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import sys
-from collections import defaultdict
 
 """
   Small script that shows the Benford's distribution
