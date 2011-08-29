@@ -36,12 +36,12 @@ def graph(stats):
         print "\n%s = %.2f%% %s" % (digit, percent, ('x'*int(percent))),
 
 def main(args):
-    if not args:
+    if args:
+        dict_file_name = args[0]
+    else:
         print "\nYou need to specify a dictionary file to read from:"
         print "\n   Usage: $ ./dict-ix-dist.py eng-dict.txt\n"
         sys.exit(1)
-    else:
-        dict_file_name = args[0]
 
     stats = parse_dict(dict_file_name)
     graph(stats)
