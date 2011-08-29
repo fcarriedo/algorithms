@@ -43,23 +43,22 @@ def benford_dist(data):
     digit occurs less than 5% of the time. This distribution of first digits
     is the same as the widths of gridlines on the logarithmic scale.
     """
-    count = dict( (i,0) for i in range(10) ) # init the dict with 1..10 all val=0
+    acumulator = dict( (x,0) for x in range(10) ) # init the dict with 1..10 all val=0
     for elem in data:
-        first_letter = str(elem)[:1]
-        count[ int(first_letter) ] += 1
+        first_digit = str(elem)[:1]
+        acumulator[ int(first_digit) ] += 1
 
-    return [ (k, (v*100)/len(data)) for k, v in count.items() if k != 0 ]
+    return [ (digit, (count*100)/len(data)) for digit, count in acumulator.items() if digit != 0 ]
 
 def graph(stats):
     """Creates a simple ASCII graph"""
-    for k, v in stats:
-        line = "".join('x' for x in xrange(v)) # line of length of percentage
-        print "\n%s = %d%% %s" % (k, v, line),
+    for digit, percent in stats:
+        print "\n%s = %3s%% %s" % (digit, percent, ('x'*percent)),
 
 def main(args):
     if not args:
         print "\nYou need to specify a max fibonnaci number to calculate:"
-        print "\n   Usage: $ ./benford-fib.py 150\n"
+        print "\n   Usage: $ ./benford-fib.py 650\n"
         sys.exit(1)
     else:
         max_fib = int(args[0])
