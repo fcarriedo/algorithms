@@ -29,7 +29,7 @@ def fib(n):
 
 def benford_dist(data):
     """
-    Returns a list of touples which represent:
+    Returns a list of tuples which represent:
 
       (k, v) where
                k = digit
