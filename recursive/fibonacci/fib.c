@@ -29,5 +29,5 @@ int main(int argc, char *argv[]) {
  * Later to come.
  */
 int fib(int number) {
-  return number<=1 ? number : fib(number-1) + fib(number-2);
+  return number<=1 ? 1 : fib(number-1) + fib(number-2);
 }
