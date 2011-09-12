@@ -22,8 +22,11 @@ int main(int argc, char *argv[]) {
  *
  * Note: Its implementation is a beautiful recursive oneliner
  * based on the ternary operator BUT a very naive approach since
- * its complexity grows exponentially. It should be calculated
- * iteratively for best performance or at least use memoization.
+ * its complexity grows exponentially (bad, bad, BAD!). 
+ * It should be calculated iteratively for best performance or at
+ * least use memoization.
+ * 
+ * Later to come.
  */
 int fib(int number) {
   return number<=1 ? number : fib(number-1) + fib(number-2);
