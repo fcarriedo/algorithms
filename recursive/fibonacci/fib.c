@@ -21,7 +21,9 @@ int main(int argc, char *argv[]) {
  * Method that performs the fibonacci number calculation.
  *
  * Note: Its implementation is a beautiful recursive oneliner
- * based on the ternary operator.
+ * based on the ternary operator BUT a very naive approach since
+ * its complexity grows exponentially. It should be calculated
+ * iteratively for best performance or at least use memoization.
  */
 int fib(int number) {
   return number<=1 ? number : fib(number-1) + fib(number-2);
