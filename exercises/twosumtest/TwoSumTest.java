@@ -16,7 +16,6 @@ interface TwoSum {
    *          but false for 10, 5, and 0.
    */
   boolean test (int test);
-
 }
 
 public class TwoSumTest {
@@ -75,31 +74,32 @@ class TwoSumLinearImpl implements TwoSum {
   private final Set<Integer> sums = new HashSet<Integer>();
 
   public void store(int input) {
-    internalStore.add(input);
+    if (internalStore.contains(input)) return; // We already have it
+
     // We calculate all the sums upon storage
-    for( int value : internalStore ) {
-      if( input != value ) {
-        int sum = input + value;
-        sums.add( sum );
-      }
+    for (int value : internalStore) {
+      sums.add(input + value);
     }
+
+    // Add it to the store
+    internalStore.add(input);
   }
 
   public boolean test(int test) {
-    return sums.contains( test );
+    return sums.contains(test);
   }
 }
 
 /**
  * Implementation with O(1) complexity on 'store'
- * and disastrous O(n2) complexity on 'test'.
+ * and disastrous O(n^2) complexity on 'test'.
  *
  * Focuses all the logic into the 'test' algorithm, not in the 'store'
  */
 class TwoSumN2Impl implements TwoSum {
 
+  // Having a list gives problems w/ duplicates
   private List<Integer> internalStore = new ArrayList<Integer>();
-
   private Set<Integer> cache = new HashSet<Integer>();
 
   public void store(int input) {
@@ -108,20 +108,16 @@ class TwoSumN2Impl implements TwoSum {
 
   public boolean test(int test) {
     // Enhancement which brings recurring cases to a O(1)
-    if( cache.contains(test) ) {
+    if (cache.contains(test)) {
       return true;
     }
 
-    for(int i=0; i<internalStore.size(); i++) {
-      int first = internalStore.get(i);
-      for(int j=0; j<internalStore.size(); j++) {
-        if(i != j) {
-          int second = internalStore.get(j);
-          int sum = first+second;
-          if(sum == test) {
-            cache.add(test);
-            return true;
-          }
+    for (int i = 0; i < internalStore.size(); i++) {
+      for (int j = i+1; j < internalStore.size(); j++) {
+        int sum = internalStore.get(i) + internalStore.get(j);
+        if(sum == test) {
+          cache.add(test);
+          return true;
         }
       }
     }
